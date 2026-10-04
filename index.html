@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>For Omya — Our Memories</title>
 <meta name="description" content="A cinematic digital memory box celebrating our unforgettable moments with Omya.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,7 +11,8 @@
 :root{--bg:#0e0a12;--ink:#f6efe7;--mute:#b3a6b8;--rose:#e0566f;--gold:#e3bd85;--card:#1a1220}
 *{box-sizing:border-box;margin:0}
 html{scroll-behavior:smooth}
-body{background:radial-gradient(1000px 600px at 85% -10%,#3d1733 0,transparent 60%),radial-gradient(900px 500px at -10% 45%,#1d1238 0,transparent 60%),var(--bg);background-attachment:fixed;color:var(--ink);font:400 1rem/1.7 Manrope,system-ui,sans-serif;overflow-x:hidden}
+body{background:radial-gradient(1000px 600px at 85% -10%,#3d1733 0,transparent 60%),radial-gradient(900px 500px at -10% 45%,#1d1238 0,transparent 60%),var(--bg);background-attachment:fixed;color:var(--ink);font:400 1rem/1.7 Manrope,system-ui,sans-serif;overflow-x:hidden;-webkit-tap-highlight-color:transparent}
+button,a{touch-action:manipulation}
 h1,h2{font-family:"Cormorant Garamond",Georgia,serif;font-weight:500;line-height:1.08}
 a{color:inherit;text-decoration:none}
 section{position:relative;z-index:1;padding:110px 6vw;max-width:1200px;margin:auto}
@@ -37,7 +38,7 @@ nav a:hover::after{width:100%}
 #surprise{border:1px solid var(--rose);background:none;color:var(--ink);padding:3px 16px;border-radius:99px;font:inherit;cursor:pointer;transition:.3s}
 #surprise:hover{background:var(--rose)}
 /* hero */
-#hero{min-height:88vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
+#hero{min-height:88vh;min-height:88svh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
 #hero h1{font-size:clamp(3.6rem,13vw,9rem);font-style:italic;margin:6px 0 14px}
 .ch{display:inline-block;opacity:0}
 body.go .ch{animation:rise 1s cubic-bezier(.2,.8,.2,1) forwards;animation-delay:calc(var(--i)*80ms + .3s)}
@@ -108,7 +109,29 @@ body.go .ch.hb{animation:rise 1s cubic-bezier(.2,.8,.2,1) forwards,beat 1.6s eas
 #mute{position:fixed;right:18px;bottom:18px;z-index:40;width:46px;height:46px;border-radius:50%;border:1px solid var(--rose);background:#0e0a12cc;color:var(--ink);cursor:pointer;font-size:1.1rem;backdrop-filter:blur(6px)}
 .b{position:fixed;z-index:80;pointer-events:none;color:var(--rose);animation:bst 1s ease-out forwards}
 @keyframes bst{to{transform:translate(var(--dx),var(--dy)) scale(.3);opacity:0}}
-@media(max-width:760px){.chapter{grid-template-columns:1fr}section{padding:72px 6vw}.track img{height:120px}#letter .paper{padding:32px 24px;font-size:1.35rem}}
+nav i,nav .s{display:none}nav b{font-weight:400}nav a.on{color:var(--rose)}
+@media(max-width:760px){
+body{padding-bottom:calc(74px + env(safe-area-inset-bottom))}
+nav{position:fixed;top:auto;bottom:0;left:0;right:0;gap:0;flex-wrap:nowrap;justify-content:space-around;padding:6px 4px calc(6px + env(safe-area-inset-bottom));background:rgba(14,10,18,.94);border-top:1px solid #ffffff14}
+nav a,#surprise{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:50px;padding:0;border:0;border-radius:10px;background:none;color:var(--mute);font-size:.62rem;line-height:1.2}
+nav a::after{display:none}
+nav i{display:block;font-style:normal;font-size:1.3rem}
+nav .l{display:none}nav .s{display:block}
+#surprise:hover{background:none}
+#mute{bottom:calc(86px + env(safe-area-inset-bottom));right:14px}
+section{padding:64px 5vw}
+#hero{min-height:calc(100svh - 74px)}
+.chapter{grid-template-columns:1fr;gap:28px}
+.scrap{grid-template-columns:1fr 1fr;gap:16px}
+.reels{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:14px;margin:36px -5vw 0;padding:6px 5vw 18px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.reels::-webkit-scrollbar{display:none}
+.reels video{flex:0 0 72vw;scroll-snap-align:center}
+.gal{columns:2 140px;column-gap:10px}.gal img{margin-bottom:10px}
+.track img{height:120px;min-width:90px}
+#letter .paper{padding:30px 22px;font-size:1.35rem}
+.orb{width:260px;height:260px;filter:blur(60px)}
+#lb{padding:10px}.lbn{width:44px;height:44px}
+}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto}.ch,.hs,.rv,.pop,#intro .lines p,#intro .tap{opacity:1!important;transform:none!important;filter:none!important}#fx{display:none}}
 </style>
 </head>
@@ -123,8 +146,12 @@ body.go .ch.hb{animation:rise 1s cubic-bezier(.2,.8,.2,1) forwards,beat 1.6s eas
 </div>
 
 <nav>
-  <a href="#hero">For Omya ❤️</a><a href="#highlights">Highlights</a><a href="#reels">Video Reels</a><a href="#gallery">Photo Gallery</a><a href="#letter">Letter</a>
-  <button id="surprise">Surprise Me ❤️</button>
+  <a href="#hero"><i>❤️</i><b class="l">For Omya ❤️</b><b class="s">Home</b></a>
+  <a href="#highlights"><i>✨</i><b class="l">Highlights</b><b class="s">Moments</b></a>
+  <a href="#reels"><i>🎬</i><b class="l">Video Reels</b><b class="s">Reels</b></a>
+  <a href="#gallery"><i>🖼️</i><b class="l">Photo Gallery</b><b class="s">Photos</b></a>
+  <a href="#letter"><i>💌</i><b class="l">Letter</b><b class="s">Letter</b></a>
+  <button id="surprise"><i>🎁</i><b class="l">Surprise Me ❤️</b><b class="s">Surprise</b></button>
 </nav>
 
 <section id="hero">
@@ -219,12 +246,12 @@ $("#ht").innerHTML=[..."For Omya"].map((c,i)=>`<span class="ch" style="--i:${i}"
 /* build sections */
 const cov=$("#cover");cov.src=MEDIA.cover;cov.onerror=bad;
 const strip=(id,a)=>{const t=$("#"+id+" .track");[...a,...a].forEach(s=>t.append(mkImg(s)))};
-strip("s1",MEDIA.gallery.slice(0,14));strip("s2",MEDIA.gallery.slice(14,28));
+const SN=innerWidth<760?9:14;strip("s1",MEDIA.gallery.slice(0,SN));strip("s2",MEDIA.gallery.slice(SN,SN*2));
 MEDIA.scrapbook.forEach((s,i)=>{const f=document.createElement("figure");f.className="pop";f.style.setProperty("--r",(i%2?1.8:-1.8)+"deg");f.append(mkImg(s));$("#scrap").append(f)});
 MEDIA.gallery.forEach((s,i)=>{const im=mkImg(s,"pop");im.style.transitionDelay=(i%3)*90+"ms";$("#galGrid").append(im)});
 MEDIA.reels.forEach(r=>{
   const v=document.createElement("video");
-  v.src=r.src;v.controls=true;v.preload="metadata";v.playsInline=true;v.title=r.title;v.className="pop";v.onerror=bad;
+  v.src=r.src+"#t=0.1";v.controls=true;v.preload="metadata";v.playsInline=true;v.title=r.title;v.className="pop";v.onerror=bad;
   v.addEventListener("play",()=>{$$("video").forEach(o=>o!==v&&o.pause());bgm.pause()});
   v.addEventListener("pause",()=>{if(started&&!muted&&!$$("video").some(o=>!o.paused))bgm.play().catch(()=>{})});
   $("#reelGrid").append(v);
@@ -248,7 +275,7 @@ tl.addEventListener("mouseleave",()=>tl.style.transform="");
 const cv=$("#fx"),cx=cv.getContext("2d");let W,H;const P=[];
 const rs=()=>{W=cv.width=innerWidth;H=cv.height=innerHeight};addEventListener("resize",rs);rs();
 const rn=(a,b)=>a+Math.random()*(b-a);
-for(let i=0;i<26;i++)P.push({x:rn(0,innerWidth),y:rn(0,innerHeight),s:rn(10,26),v:rn(.2,.7),d:rn(0,6.3),a:rn(.07,.24),c:i%3?"#e0566f":"#e3bd85"});
+const N=innerWidth<760?12:26;for(let i=0;i<N;i++)P.push({x:rn(0,innerWidth),y:rn(0,innerHeight),s:rn(10,26),v:rn(.2,.7),d:rn(0,6.3),a:rn(.07,.24),c:i%3?"#e0566f":"#e3bd85"});
 (function loop(){cx.clearRect(0,0,W,H);for(const p of P){p.y-=p.v;p.x+=Math.sin(p.d+=.012)*.4;if(p.y<-30){p.y=H+30;p.x=rn(0,W)}cx.globalAlpha=p.a;cx.fillStyle=p.c;cx.font=p.s+"px serif";cx.fillText("♥",p.x,p.y)}requestAnimationFrame(loop)})();
 
 /* heart burst on every click */
@@ -277,6 +304,14 @@ document.addEventListener("keydown",e=>{if(!$("#lb").classList.contains("on"))re
 /* surprise + replay */
 $("#surprise").addEventListener("click",()=>{const a=$$(".gal img").filter(i=>i.style.display!=="none");if(a.length)openLB(a[Math.floor(Math.random()*a.length)].src)});
 $("#replay").addEventListener("click",()=>{scrollTo({top:0});setTimeout(()=>location.reload(),600)});
+
+/* mobile: swipe in lightbox, pause music when app is hidden, highlight current section in nav */
+let tx=0;const lbx=$("#lb");
+lbx.addEventListener("touchstart",e=>{tx=e.touches[0].clientX},{passive:true});
+lbx.addEventListener("touchend",e=>{const d=e.changedTouches[0].clientX-tx;if(Math.abs(d)>50)step(d<0?1:-1)});
+document.addEventListener("visibilitychange",()=>{if(document.hidden)bgm.pause();else if(started&&!muted&&songEl.paused&&!$$("video").some(o=>!o.paused))bgm.play().catch(()=>{})});
+const navIO=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)$$("nav a").forEach(a=>a.classList.toggle("on",a.hash==="#"+e.target.id))}),{rootMargin:"-45% 0px -50% 0px"});
+["hero","highlights","reels","gallery","letter"].forEach(id=>navIO.observe($("#"+id)));
 </script>
 </body>
 </html>
