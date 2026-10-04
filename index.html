@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Omya — Our Memories</title>
+<meta name="description" content="A cinematic digital memory box celebrating our unforgettable moments with Omya.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Manrope:wght@400;500&family=Caveat:wght@500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0e0a12;--ink:#f6efe7;--mute:#b3a6b8;--rose:#e0566f;--gold:#e3bd85;--card:#1a1220}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{background:radial-gradient(1000px 600px at 85% -10%,#3d1733 0,transparent 60%),radial-gradient(900px 500px at -10% 45%,#1d1238 0,transparent 60%),var(--bg);background-attachment:fixed;color:var(--ink);font:400 1rem/1.7 Manrope,system-ui,sans-serif;overflow-x:hidden}
+h1,h2{font-family:"Cormorant Garamond",Georgia,serif;font-weight:500;line-height:1.08}
+a{color:inherit;text-decoration:none}
+section{position:relative;z-index:1;padding:110px 6vw;max-width:1200px;margin:auto}
+.mute{color:var(--mute)}
+.sub{color:var(--gold);font-family:"Cormorant Garamond",serif;font-style:italic;font-size:1.25rem}
+h2.t{font-size:clamp(2.2rem,5vw,3.6rem);margin:4px 0 10px}
+#bar{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--rose),var(--gold));z-index:70}
+#fx{position:fixed;inset:0;z-index:0;pointer-events:none}
+/* intro */
+#intro{position:fixed;inset:0;z-index:50;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;cursor:pointer;transition:opacity 1s,visibility 1s}
+#intro.gone{opacity:0;visibility:hidden}
+#intro .lines p{font:italic 500 clamp(1.5rem,4.5vw,2.4rem)/1.5 "Cormorant Garamond",serif;opacity:0;filter:blur(8px);animation:clear 1.2s forwards}
+#intro .lines p:nth-child(2){animation-delay:1.3s}#intro .lines p:nth-child(3){animation-delay:2.6s}#intro .lines p:nth-child(4){animation-delay:3.7s}#intro .lines p:nth-child(5){animation-delay:4.8s}
+#intro .tap{margin-top:44px;padding:12px 26px;border:1px solid var(--rose);border-radius:99px;color:var(--gold);opacity:0;animation:clear 1s 5.4s forwards,glow 2s 6.4s infinite}
+#skip{position:absolute;bottom:28px;right:28px;color:var(--mute);font-size:.9rem}
+@keyframes clear{to{opacity:1;filter:none}}
+@keyframes glow{50%{box-shadow:0 0 28px #e0566f88}}
+/* nav */
+nav{position:sticky;top:0;z-index:20;display:flex;gap:26px;justify-content:center;align-items:center;flex-wrap:wrap;padding:14px;background:rgba(14,10,18,.72);backdrop-filter:blur(12px);font-size:.95rem}
+nav a:not(.x){position:relative;padding:2px 0}
+nav a:not(.x)::after{content:"";position:absolute;left:0;bottom:-2px;height:1px;width:0;background:var(--rose);transition:width .3s}
+nav a:hover::after{width:100%}
+#surprise{border:1px solid var(--rose);background:none;color:var(--ink);padding:3px 16px;border-radius:99px;font:inherit;cursor:pointer;transition:.3s}
+#surprise:hover{background:var(--rose)}
+/* hero */
+#hero{min-height:88vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
+#hero h1{font-size:clamp(3.6rem,13vw,9rem);font-style:italic;margin:6px 0 14px}
+.ch{display:inline-block;opacity:0}
+body.go .ch{animation:rise 1s cubic-bezier(.2,.8,.2,1) forwards;animation-delay:calc(var(--i)*80ms + .3s)}
+body.go .ch.hb{animation:rise 1s cubic-bezier(.2,.8,.2,1) forwards,beat 1.6s ease-in-out 2.4s infinite;animation-delay:.9s,2.4s}
+@keyframes rise{from{opacity:0;transform:translateY(60%) rotate(8deg);filter:blur(12px)}to{opacity:1;transform:none;filter:none}}
+@keyframes beat{0%,100%{transform:scale(1)}15%{transform:scale(1.25)}30%{transform:scale(1)}45%{transform:scale(1.15)}}
+.hs{opacity:0}body.go .hs{animation:clear 1.2s 1.6s forwards}
+.btn{display:inline-block;margin-top:34px;padding:13px 32px;background:linear-gradient(120deg,var(--rose),#b13a6a);color:#fff;border-radius:99px;box-shadow:0 10px 30px #e0566f44;transition:transform .3s,box-shadow .3s}
+.btn:hover{transform:translateY(-3px) scale(1.04);box-shadow:0 16px 40px #e0566f77}
+.scroll{margin-top:40px;color:var(--gold);animation:bob 1.8s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(10px)}}
+.orb{position:absolute;width:420px;height:420px;border-radius:50%;filter:blur(90px);opacity:.3;z-index:-1;animation:fl 14s ease-in-out infinite alternate}
+.orb.a{background:var(--rose);top:5%;left:-8%}.orb.b{background:#6a3fd1;bottom:0;right:-6%;animation-delay:-6s}
+@keyframes fl{to{transform:translate(60px,-50px) scale(1.2)}}
+/* film strips */
+.strip{position:relative;z-index:1;overflow:hidden;padding:8px 0;-webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)}
+.track{display:flex;gap:14px;width:max-content;animation:slide 70s linear infinite}
+.strip.r .track{animation-direction:reverse}
+.strip:hover .track{animation-play-state:paused}
+.track img{height:170px;min-width:120px;border-radius:10px;cursor:zoom-in;transition:transform .4s,filter .4s;filter:saturate(.9)}
+.track img:hover{transform:scale(1.07);filter:none}
+@keyframes slide{to{transform:translateX(-50%)}}
+/* chapter */
+.chapter{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+.chapter h2{font-size:clamp(2.1rem,4.4vw,3.2rem);margin:12px 0 18px}
+.tags{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+.tags span{border:1px solid #4a3556;padding:5px 15px;border-radius:99px;color:var(--gold);font-size:.9rem;transition:.3s}
+.tags span:hover{background:#e0566f22;border-color:var(--rose)}
+.frame{border-radius:14px;overflow:hidden;box-shadow:0 30px 80px #e0566f30;transition:transform .15s;will-change:transform}
+.frame img{display:block;width:100%;cursor:zoom-in;animation:kb 18s ease-in-out infinite alternate}
+@keyframes kb{to{transform:scale(1.1)}}
+/* scrapbook */
+.scrap{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:26px;margin-top:36px}
+.scrap figure{background:#f7f1ea;padding:12px 12px 44px;border-radius:3px;box-shadow:0 14px 34px #0009;transform:rotate(var(--r))}
+.scrap figure.in{transition:transform .5s,box-shadow .5s}
+.scrap figure.in:hover{transform:rotate(0) translateY(-10px) scale(1.04);box-shadow:0 26px 50px #e0566f44}
+.scrap img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover;cursor:zoom-in}
+/* reels + gallery */
+.reels{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:22px;margin-top:36px}
+.reels video{width:100%;aspect-ratio:9/16;object-fit:cover;border-radius:12px;background:#000;border:1px solid #ffffff14}
+.reels video.in{transition:transform .4s,box-shadow .4s}
+.reels video.in:hover{transform:translateY(-8px);box-shadow:0 20px 50px #e0566f50}
+.gal{columns:3 230px;column-gap:14px;margin-top:36px}
+.gal img{width:100%;margin-bottom:14px;border-radius:8px;display:block;cursor:zoom-in}
+.gal img.in{transition:transform .5s,filter .5s}
+.gal img.in:hover{transform:scale(1.035);filter:brightness(1.12) saturate(1.15)}
+/* reveals */
+.rv{opacity:0;transform:translateY(30px);transition:opacity .9s,transform .9s}
+.pop{opacity:0;transform:scale(.92);filter:blur(8px);transition:opacity .8s,transform .8s,filter .8s}
+.rv.in,.pop.in{opacity:1;transform:none;filter:none}
+.scrap figure.pop{opacity:0;transform:rotate(var(--r)) scale(.9)}
+.scrap figure.pop.in{opacity:1;transform:rotate(var(--r))}
+/* letter + end */
+#letter .paper{max-width:680px;margin:36px auto 0;padding:48px 44px;border-radius:8px;background:repeating-linear-gradient(#1b1322 0 34px,#271b30 35px);box-shadow:0 24px 60px #000a;font:500 1.55rem/35px Caveat,cursive}
+#letter .paper p{margin-bottom:35px}
+#end{text-align:center}
+#end h2{font-size:clamp(2rem,5vw,3.4rem);margin-bottom:14px}
+#end button{margin-top:30px;padding:13px 30px;border-radius:99px;border:1px solid var(--rose);background:none;color:var(--ink);font:inherit;cursor:pointer;transition:.3s}
+#end button:hover{background:var(--rose);transform:scale(1.05)}
+.song{display:flex;align-items:center;gap:14px;justify-content:center;margin-top:52px;color:var(--mute);flex-wrap:wrap}
+/* lightbox, music, hearts */
+#lb{position:fixed;inset:0;z-index:60;background:#000d;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;visibility:hidden;transition:.3s}
+#lb.on{opacity:1;visibility:visible}
+#lb img{max-width:100%;max-height:100%;border-radius:6px;transform:scale(.94);transition:transform .35s}
+#lb.on img{transform:none}
+.lbn{position:absolute;top:50%;width:48px;height:48px;margin-top:-24px;border-radius:50%;border:1px solid #fff4;background:#0008;color:#fff;font-size:1.6rem;cursor:pointer}
+#prev{left:14px}#next{right:14px}
+#mute{position:fixed;right:18px;bottom:18px;z-index:40;width:46px;height:46px;border-radius:50%;border:1px solid var(--rose);background:#0e0a12cc;color:var(--ink);cursor:pointer;font-size:1.1rem;backdrop-filter:blur(6px)}
+.b{position:fixed;z-index:80;pointer-events:none;color:var(--rose);animation:bst 1s ease-out forwards}
+@keyframes bst{to{transform:translate(var(--dx),var(--dy)) scale(.3);opacity:0}}
+@media(max-width:760px){.chapter{grid-template-columns:1fr}section{padding:72px 6vw}.track img{height:120px}#letter .paper{padding:32px 24px;font-size:1.35rem}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto}.ch,.hs,.rv,.pop,#intro .lines p,#intro .tap{opacity:1!important;transform:none!important;filter:none!important}#fx{display:none}}
+</style>
+</head>
+<body>
+<div id="bar"></div>
+<canvas id="fx"></canvas>
+
+<div id="intro">
+  <div class="lines"><p>Hey Omya...</p><p>This isn't just a website.</p><p>It's a collection of us.</p><p>Countless moments. Endless laughter.</p><p>One crazy journey.</p></div>
+  <p class="tap">🎵 Tap to begin our memories 🎵</p>
+  <a id="skip" href="#hero">Skip Intro ↗</a>
+</div>
+
+<nav>
+  <a href="#hero">For Omya ❤️</a><a href="#highlights">Highlights</a><a href="#reels">Video Reels</a><a href="#gallery">Photo Gallery</a><a href="#letter">Letter</a>
+  <button id="surprise">Surprise Me ❤️</button>
+</nav>
+
+<section id="hero">
+  <div class="orb a"></div><div class="orb b"></div>
+  <p class="sub hs">Hey Omya...</p>
+  <h1 id="ht">For Omya</h1>
+  <p class="mute hs">A collection of us. Countless moments. One crazy journey.</p>
+  <a class="btn hs" href="#highlights">Enter Our Memories</a>
+  <div class="scroll">↓</div>
+</section>
+
+<div class="strip" id="s1"><div class="track"></div></div>
+<div class="strip r" id="s2"><div class="track"></div></div>
+
+<section id="highlights">
+  <div class="chapter">
+    <div class="rv">
+      <p class="sub">Chapter 01 · Where It All Started</p>
+      <h2>Every frame here is a piece of our story, Omya.</h2>
+      <p class="mute">We took these photos without knowing they'd become treasures. Late nights, road trips, big wins, and endless laughs.</p>
+      <div class="tags"><span>✦ Snapshots</span><span>▶ Video Reels</span><span>∞ Brotherhood</span></div>
+    </div>
+    <div class="frame pop" id="tilt"><img id="cover" alt="Where it started"></div>
+  </div>
+  <div style="margin-top:110px">
+    <p class="sub rv">Scrapbook</p>
+    <h2 class="t rv">The Moments We Never Forget</h2>
+    <div class="scrap" id="scrap"></div>
+  </div>
+</section>
+
+<section id="reels">
+  <p class="sub rv">Video Archive</p>
+  <h2 class="t rv">Moments In Motion</h2>
+  <p class="mute rv">Click any reel to play the live footage.</p>
+  <div class="reels" id="reelGrid"></div>
+</section>
+
+<section id="gallery">
+  <p class="sub rv">Complete Collection</p>
+  <h2 class="t rv">Photo Gallery</h2>
+  <p class="mute rv">Browse through our journey.</p>
+  <div class="gal" id="galGrid"></div>
+</section>
+
+<section id="letter">
+  <p class="sub rv">A letter</p>
+  <h2 class="t rv">For you, Omya</h2>
+  <div class="paper" id="letterText"></div>
+</section>
+
+<section id="end">
+  <p class="sub rv">To Be Continued...</p>
+  <h2 class="rv">"Damn... these were some good times." ❤️</h2>
+  <p class="mute rv">Here's to many more stories with Omya.</p>
+  <button id="replay">Replay Our Memories</button>
+  <div class="song"><span>Our Song</span><audio id="song" loop controls preload="none"></audio></div>
+</section>
+
+<div id="lb"><button class="lbn" id="prev" aria-label="Previous">‹</button><img alt=""><button class="lbn" id="next" aria-label="Next">›</button></div>
+<button id="mute" aria-label="Toggle music">🔊</button>
+<audio id="bgm" loop preload="auto"></audio>
+
+<script>
+/* ======== EDIT THIS BLOCK: your photos, videos, song and letter ======== */
+const MEDIA = {
+  song: "media/song.mp3",
+  cover: "media/photos/20240129_122847.jpg",
+  scrapbook: ["media/photos/20240129_122847.jpg", "media/photos/20260120_144718_011.jpg", "media/photos/20260922_125330.jpg", "media/photos/20250421_131136.jpg"],
+  reels: [{"src": "media/videos/20231106_115124.mp4", "title": "Nov 6, 2023"}, {"src": "media/videos/20231209_141920.mp4", "title": "Dec 9, 2023"}, {"src": "media/videos/20240913_131246_Copy.mp4", "title": "Sep 13, 2024"}, {"src": "media/videos/20241011_212445_Copy.mp4", "title": "Oct 11, 2024"}, {"src": "media/videos/20241116_124434.mp4", "title": "Nov 16, 2024"}, {"src": "media/videos/20250518_212053.mp4", "title": "May 18, 2025"}, {"src": "media/videos/20250614_002428.mp4", "title": "Jun 14, 2025"}, {"src": "media/videos/IMG_5911.mp4", "title": "Reel"}, {"src": "media/videos/IMG_2553.mp4", "title": "Reel"}, {"src": "media/videos/20260922_120639.mp4", "title": "Sep 22, 2026"}],
+  gallery: ["media/photos/20240129_122847.jpg", "media/photos/20240129_123721.jpg", "media/photos/20240213_134311_Copy.jpg", "media/photos/20240111_113524.jpg", "media/photos/20240111_114016.jpg", "media/photos/20240111_115749.jpg", "media/photos/20231121_111303.jpg", "media/photos/20230923_135152.jpg", "media/photos/20231004_112025.jpg", "media/photos/20230923_130835.jpg", "media/photos/20230923_131445.jpg", "media/photos/20230923_132154.jpg", "media/photos/20230923_130831.jpg", "media/photos/20260120_144718_011.jpg", "media/photos/IMG_20261004_WA0045.jpg", "media/photos/IMG_20261004_WA0043.jpg", "media/photos/IMG_20261004_WA0042.jpg", "media/photos/IMG_20261004_WA0041.jpg", "media/photos/IMG_20261004_WA0038.jpg", "media/photos/IMG_20261004_WA0036.jpg", "media/photos/IMG_20261004_WA0035.jpg", "media/photos/IMG_20261004_WA0031.jpg", "media/photos/IMG_20261004_WA0029.jpg", "media/photos/IMG_20261003_WA0016.jpg", "media/photos/IMG_20261003_WA0014.jpg", "media/photos/IMG_20261003_WA0012.jpg", "media/photos/IMG_20261002_WA0023.jpg", "media/photos/IMG_20260922_WA0042.jpg", "media/photos/20260922_125330.jpg", "media/photos/IMG_20251102_WA0398.jpg", "media/photos/IMG_20251102_WA0198.jpg", "media/photos/IMG_1793.jpg", "media/photos/20251101_142606_0.jpg", "media/photos/20251101_091405.jpg", "media/photos/20251101_052814.jpg", "media/photos/IMG_20251002_WA0052.jpg", "media/photos/IMG_20250902_WA0230.jpg", "media/photos/IMG_20250902_WA0223.jpg", "media/photos/20250705_125742.jpg", "media/photos/IMG_1161_HEIC.jpg", "media/photos/IMG_1647_HEIC.jpg", "media/photos/IMG_0931_HEIC.jpg", "media/photos/20250613_163707.jpg", "media/photos/20250612_162727.jpg", "media/photos/20250426_143249.jpg", "media/photos/20250421_131136.jpg", "media/photos/20250404_162733.jpg", "media/photos/20250404_151254.jpg", "media/photos/20250303_115352.jpg", "media/photos/Picsart_24_12_19_20_22_28_667.jpg", "media/photos/20241219_154807.jpg", "media/photos/20241111_155502.jpg", "media/photos/20241111_154406.jpg", "media/photos/20241023_171350.jpg", "media/photos/20240902_125409.jpg"],
+  letter: `Omya,
+
+Snapshots and video reels could never hold every inside joke, midnight ride, or canteen debate we shared.
+
+But every single frame here is proof of the unforgettable times we built together.
+
+Thank you for being the heart of our group—the one who brings the laughs, the spontaneous plans, and the unwavering loyalty.
+
+Here's to the memories we've made, and all the crazy chapters still waiting for us.
+
+— Us ❤️`
+};
+/* ======================================================================= */
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const bad=e=>{e.target.style.display="none"};
+const mkImg=(src,cls)=>{const i=new Image();i.src=src;i.loading="lazy";i.alt="Memory photo";i.onerror=bad;if(cls)i.className=cls;return i};
+
+/* hero title: letters rise one by one */
+$("#ht").innerHTML=[..."For Omya"].map((c,i)=>`<span class="ch" style="--i:${i}">${c===" "?"&nbsp;":c}</span>`).join("")+'<span class="ch hb">&nbsp;❤️</span>';
+
+/* build sections */
+const cov=$("#cover");cov.src=MEDIA.cover;cov.onerror=bad;
+const strip=(id,a)=>{const t=$("#"+id+" .track");[...a,...a].forEach(s=>t.append(mkImg(s)))};
+strip("s1",MEDIA.gallery.slice(0,14));strip("s2",MEDIA.gallery.slice(14,28));
+MEDIA.scrapbook.forEach((s,i)=>{const f=document.createElement("figure");f.className="pop";f.style.setProperty("--r",(i%2?1.8:-1.8)+"deg");f.append(mkImg(s));$("#scrap").append(f)});
+MEDIA.gallery.forEach((s,i)=>{const im=mkImg(s,"pop");im.style.transitionDelay=(i%3)*90+"ms";$("#galGrid").append(im)});
+MEDIA.reels.forEach(r=>{
+  const v=document.createElement("video");
+  v.src=r.src;v.controls=true;v.preload="metadata";v.playsInline=true;v.title=r.title;v.className="pop";v.onerror=bad;
+  v.addEventListener("play",()=>{$$("video").forEach(o=>o!==v&&o.pause());bgm.pause()});
+  v.addEventListener("pause",()=>{if(started&&!muted&&!$$("video").some(o=>!o.paused))bgm.play().catch(()=>{})});
+  $("#reelGrid").append(v);
+});
+$("#letterText").innerHTML=MEDIA.letter.split(/\n\n+/).map((t,i)=>`<p class="rv" style="transition-delay:${i*250}ms"></p>`).join("");
+$$("#letterText p").forEach((p,i)=>p.textContent=MEDIA.letter.split(/\n\n+/)[i]);
+
+/* scroll reveals */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){const t=e.target;t.classList.add("in");io.unobserve(t);setTimeout(()=>t.style.transitionDelay="",1400)}}),{threshold:.12});
+$$(".rv,.pop").forEach(el=>io.observe(el));
+
+/* progress bar */
+addEventListener("scroll",()=>{$("#bar").style.width=scrollY/(document.documentElement.scrollHeight-innerHeight)*100+"%"},{passive:true});
+
+/* 3D tilt on cover */
+const tl=$("#tilt");
+tl.addEventListener("mousemove",e=>{const r=tl.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;tl.style.transform=`perspective(900px) rotateY(${x*10}deg) rotateX(${-y*10}deg)`});
+tl.addEventListener("mouseleave",()=>tl.style.transform="");
+
+/* floating hearts background */
+const cv=$("#fx"),cx=cv.getContext("2d");let W,H;const P=[];
+const rs=()=>{W=cv.width=innerWidth;H=cv.height=innerHeight};addEventListener("resize",rs);rs();
+const rn=(a,b)=>a+Math.random()*(b-a);
+for(let i=0;i<26;i++)P.push({x:rn(0,innerWidth),y:rn(0,innerHeight),s:rn(10,26),v:rn(.2,.7),d:rn(0,6.3),a:rn(.07,.24),c:i%3?"#e0566f":"#e3bd85"});
+(function loop(){cx.clearRect(0,0,W,H);for(const p of P){p.y-=p.v;p.x+=Math.sin(p.d+=.012)*.4;if(p.y<-30){p.y=H+30;p.x=rn(0,W)}cx.globalAlpha=p.a;cx.fillStyle=p.c;cx.font=p.s+"px serif";cx.fillText("♥",p.x,p.y)}requestAnimationFrame(loop)})();
+
+/* heart burst on every click */
+document.addEventListener("click",e=>{for(let i=0;i<9;i++){const b=document.createElement("span"),a=rn(0,6.28),d=rn(40,90);b.className="b";b.textContent="♥";b.style.cssText=`left:${e.clientX}px;top:${e.clientY}px;font-size:${rn(12,22)}px;--dx:${Math.cos(a)*d}px;--dy:${Math.sin(a)*d-30}px`;document.body.append(b);setTimeout(()=>b.remove(),1000)}});
+
+/* music */
+const bgm=$("#bgm"),songEl=$("#song");
+bgm.src=MEDIA.song;songEl.src=MEDIA.song;bgm.volume=.5;
+let started=false,muted=false;
+$("#intro").addEventListener("click",e=>{if(e.target.id==="skip")e.preventDefault();$("#intro").classList.add("gone");document.body.classList.add("go");if(!started){started=true;bgm.play().catch(()=>{})}});
+$("#mute").addEventListener("click",()=>{muted=!muted;muted?bgm.pause():bgm.play().catch(()=>{});$("#mute").textContent=muted?"🔇":"🔊"});
+songEl.addEventListener("play",()=>bgm.pause());
+songEl.addEventListener("pause",()=>{if(started&&!muted)bgm.play().catch(()=>{})});
+
+/* lightbox with prev / next */
+let LB=[],li=0;
+const showLB=()=>{$("#lb img").src=LB[li];$("#lb").classList.add("on")};
+const openLB=src=>{LB=$$(".gal img").filter(i=>i.style.display!=="none").map(i=>i.src);li=LB.indexOf(src);if(li<0){LB.unshift(src);li=0}showLB()};
+const step=d=>{li=(li+d+LB.length)%LB.length;showLB()};
+document.addEventListener("click",e=>{if(e.target.matches(".scrap img,.gal img,.frame img,.track img"))openLB(e.target.src)});
+$("#prev").addEventListener("click",e=>{e.stopPropagation();step(-1)});
+$("#next").addEventListener("click",e=>{e.stopPropagation();step(1)});
+$("#lb").addEventListener("click",()=>$("#lb").classList.remove("on"));
+document.addEventListener("keydown",e=>{if(!$("#lb").classList.contains("on"))return;if(e.key==="Escape")$("#lb").classList.remove("on");if(e.key==="ArrowRight")step(1);if(e.key==="ArrowLeft")step(-1)});
+
+/* surprise + replay */
+$("#surprise").addEventListener("click",()=>{const a=$$(".gal img").filter(i=>i.style.display!=="none");if(a.length)openLB(a[Math.floor(Math.random()*a.length)].src)});
+$("#replay").addEventListener("click",()=>{scrollTo({top:0});setTimeout(()=>location.reload(),600)});
+</script>
+</body>
+</html>
